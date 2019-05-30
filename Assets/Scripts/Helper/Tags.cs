@@ -18,5 +18,5 @@ public class Tags : MonoBehaviour
     //tags
     public static string PLAYER_TAG = "Player";
     public static string ENEMY_TAG = "Enemy";
-    public static string COIN_TAG = "Coin";
+    public static string COIN_TAG = "coin";
 }

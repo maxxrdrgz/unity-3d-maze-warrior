@@ -133,4 +133,12 @@ public class PlayerScript : MonoBehaviour
     void DeactivateDamagePoint(){
         damagePoint.SetActive(false);
     }
+    
+    private void OnTriggerEnter(Collider other) {
+        if(other.tag == Tags.COIN_TAG){
+            other.gameObject.SetActive(false);
+            GameplayController.instance.CoinCollected();
+            SoundManager.instance.PlayCoinSound();
+        }    
+    }
 }
