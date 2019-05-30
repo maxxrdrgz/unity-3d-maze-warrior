@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
+    public GameObject damagePoint;
+
     private GameObject player;
     private Rigidbody rbody;
     private Animator anim;
@@ -27,7 +29,7 @@ public class EnemyScript : MonoBehaviour
         Vector3 direction = player.transform.position - transform.position;
         float distance = direction.magnitude;
         direction.Normalize();
-        
+
         Vector3 velocity = direction * enemy_speed;
 
         if(distance > enemy_attack_threshold && 
@@ -66,5 +68,13 @@ public class EnemyScript : MonoBehaviour
                 anim.SetTrigger(Tags.STOP_TRIGGER);
             }
         }
+    }
+    
+    void ActivateDamagePoint(){
+        damagePoint.SetActive(true);
+    }
+
+    void DeactivateDamagePoint(){
+        damagePoint.SetActive(false);
     }
 }

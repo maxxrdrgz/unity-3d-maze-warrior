@@ -6,6 +6,7 @@ public class PlayerScript : MonoBehaviour
 {
     public Transform groundCheck;
     public LayerMask groundLayer;
+    public GameObject damagePoint;
 
     private Rigidbody rbody;
     private Animator anim;
@@ -123,5 +124,13 @@ public class PlayerScript : MonoBehaviour
                 anim.SetTrigger(Tags.JUMP_TRIGGER);
             }
         }
+    }
+
+    void ActivateDamagePoint(){
+        damagePoint.SetActive(true);
+    }
+
+    void DeactivateDamagePoint(){
+        damagePoint.SetActive(false);
     }
 }
