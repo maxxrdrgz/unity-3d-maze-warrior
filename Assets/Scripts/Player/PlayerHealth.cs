@@ -15,16 +15,21 @@ public class PlayerHealth : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
+    private void Start() {
+        GameplayController.instance.DisplayHealth(health);
+    }
+
     public void ApplyDamage(int damageAmount){
         health -= damageAmount;
         if(health < 0){
             health = 0;
         }
-        //display health value
+        GameplayController.instance.DisplayHealth(health);
         if(health == 0){
             playerScript.enabled = false;
             anim.Play(Tags.DEAD_ANIMATION);
-            //call game over panel
+            GameplayController.instance.isPlayerAlive = false;
+            //game over panel
         }
     }
 }
