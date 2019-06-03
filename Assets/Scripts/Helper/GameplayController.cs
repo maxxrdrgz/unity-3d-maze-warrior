@@ -9,6 +9,7 @@ public class GameplayController : MonoBehaviour
     [HideInInspector]
     public bool isPlayerAlive;
     public float timerTime = 99f;
+    public GameObject endPanel;
 
     private Text coinText, healthText, timerText;
     private int coinScore;
@@ -26,6 +27,7 @@ public class GameplayController : MonoBehaviour
     void Start()
     {
         isPlayerAlive = true;
+        endPanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -55,5 +57,14 @@ public class GameplayController : MonoBehaviour
     void CountdownTimer(){
         timerTime -= Time.deltaTime;
         timerText.text = "Time: " + timerTime.ToString("F0");
+
+        if(timerTime <= 0){
+            GameOver();
+        }
+    }
+
+    public void GameOver(){
+        Time.timeScale = 0f;
+        endPanel.SetActive(true);
     }
 }

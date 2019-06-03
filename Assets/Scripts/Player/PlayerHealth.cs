@@ -29,7 +29,7 @@ public class PlayerHealth : MonoBehaviour
             playerScript.enabled = false;
             anim.Play(Tags.DEAD_ANIMATION);
             GameplayController.instance.isPlayerAlive = false;
-            //game over panel
+            GameplayController.instance.GameOver();
         }
     }
 }
