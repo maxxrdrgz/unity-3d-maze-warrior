@@ -139,6 +139,16 @@ public class PlayerScript : MonoBehaviour
             other.gameObject.SetActive(false);
             GameplayController.instance.CoinCollected();
             SoundManager.instance.PlayCoinSound();
-        }    
+        }
+
+        if(other.tag == Tags.DOOR_TAG){
+            other.gameObject.GetComponent<Animator>().Play("DoorOpen");
+        }
+    }
+
+    private void OnTriggerExit(Collider other) {
+        if(other.tag == Tags.DOOR_TAG){
+            other.gameObject.GetComponent<Animator>().Play("DoorClose");
+        }
     }
 }

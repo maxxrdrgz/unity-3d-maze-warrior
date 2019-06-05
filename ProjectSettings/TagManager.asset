@@ -8,6 +8,7 @@ TagManager:
   - wall
   - treasure
   - Enemy
+  - Door
   layers:
   - Default
   - TransparentFX
