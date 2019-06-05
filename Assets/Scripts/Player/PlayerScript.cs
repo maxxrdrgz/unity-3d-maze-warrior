@@ -144,6 +144,10 @@ public class PlayerScript : MonoBehaviour
         if(other.tag == Tags.DOOR_TAG){
             other.gameObject.GetComponent<Animator>().Play("DoorOpen");
         }
+
+        if(other.tag == Tags.TREASURE_TAG){
+            GameplayController.instance.CompletedLevel();
+        }
     }
 
     private void OnTriggerExit(Collider other) {

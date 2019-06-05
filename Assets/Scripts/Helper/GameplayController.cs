@@ -10,9 +10,14 @@ public class GameplayController : MonoBehaviour
     public bool isPlayerAlive;
     public float timerTime = 99f;
     public GameObject endPanel;
+    public GameObject completedPanel;
+
+    public Sprite[] stars;
 
     private Text coinText, healthText, timerText;
     private int coinScore;
+    private int startScore;
+    private int starIndex;
 
     private void Awake() {
         MakeInstance();
@@ -66,5 +71,17 @@ public class GameplayController : MonoBehaviour
     public void GameOver(){
         Time.timeScale = 0f;
         endPanel.SetActive(true);
+
+    }
+
+    public void CompletedLevel(){
+        Time.timeScale = 0f;
+        endPanel.transform.Find("EndGame Text").GetComponent<Text>().text = "Complete";
+        endPanel.transform.Find("Stars").GetComponent<Image>().sprite = stars[1];
+        endPanel.SetActive(true);
+    }
+
+    private void CalculateStarScore(){
+        
     }
 }
