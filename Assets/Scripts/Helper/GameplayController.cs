@@ -11,13 +11,14 @@ public class GameplayController : MonoBehaviour
     public float timerTime = 99f;
     public GameObject endPanel;
     public GameObject completedPanel;
-
     public Sprite[] stars;
 
     private Text coinText, healthText, timerText;
     private int coinScore;
-    private int startScore;
+    private int starScore;
     private int starIndex;
+    private float totalPossibleScore;
+    private float currentScore;
 
     private void Awake() {
         MakeInstance();
@@ -77,11 +78,24 @@ public class GameplayController : MonoBehaviour
     public void CompletedLevel(){
         Time.timeScale = 0f;
         endPanel.transform.Find("EndGame Text").GetComponent<Text>().text = "Complete";
-        endPanel.transform.Find("Stars").GetComponent<Image>().sprite = stars[1];
+        endPanel.transform.Find("Stars").GetComponent<Image>().sprite = stars[starScore];
         endPanel.SetActive(true);
     }
 
-    private void CalculateStarScore(){
-        
+    private void CalculateStarScore(int health){
+        //100 is for playerhealth
+        totalPossibleScore = timerTime + 100;
+        currentScore = (timerTime + health + coinScore) / totalPossibleScore;
+
+        if(totalPossibleScore >= 0.75){
+            starScore = 3;
+        }else if(totalPossibleScore >= 0.5 && totalPossibleScore < .75){
+            starScore = 2;
+        }else if(totalPossibleScore >= .25 && totalPossibleScore < .5){
+            starScore = 1;
+        }else{
+            starScore = 0;
+        }
+        GameManager.instance.StoreStarScore(starScore);
     }
 }
