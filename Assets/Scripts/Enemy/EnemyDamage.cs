@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyDamage : MonoBehaviour
 {
-    public int damageAmount = 2;
+    public int damageAmount = 1;
     public LayerMask playerLayer;
 
 
