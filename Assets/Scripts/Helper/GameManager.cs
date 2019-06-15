@@ -43,13 +43,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void AddStars(int stars){
-        totalStarScore += stars;
+    void UpdateTotalStarScore(){
+        totalStarScore = 0;
+        for(int i = 0; i < starsEarnedPerLevel.Length; i++){
+            totalStarScore += starsEarnedPerLevel[i];
+        }
     }
 
     void InitializeData(){
         totalNumOfLevels = SceneManager.sceneCountInBuildSettings - 1;
-        totalStarScore = 3;
+        totalStarScore = 0;
         levelsUnlocked = new bool[totalNumOfLevels];
         levelsUnlocked[0] = true; // first level is always unlocked
         starsEarnedPerLevel = new int[totalNumOfLevels];
@@ -65,13 +68,16 @@ public class GameManager : MonoBehaviour
     }
 
     public void StoreStarScore(int starsEarned){
-        starsEarnedPerLevel[currentLevel-1] = starsEarned;
-        UpdateLockedLevels();
+        if(starsEarnedPerLevel[currentLevel-1] < starsEarned){
+            starsEarnedPerLevel[currentLevel-1] = starsEarned;
+            UpdateTotalStarScore();
+            UpdateLockedLevels();
+        }
     }
 
     public void UpdateLockedLevels(){
         for(int levelIndex = 1; levelIndex < totalNumOfLevels; levelIndex++){
-            if(totalStarScore > GetStarsNeededForUnlock(levelIndex)){
+            if(totalStarScore >= GetStarsNeededForUnlock(levelIndex)){
                 levelsUnlocked[levelIndex] = true;
             }
         }
