@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameplayController : MonoBehaviour
 {
     public static GameplayController instance;
     [HideInInspector]
     public bool isPlayerAlive;
-    public float timerTime = 99f;
+    public float timerTime;
     public GameObject endPanel;
-    public GameObject completedPanel;
+    public GameObject coinParent;
     public Sprite[] stars;
 
     private Text coinText, healthText, timerText;
@@ -19,6 +20,9 @@ public class GameplayController : MonoBehaviour
     private int starIndex;
     private float totalPossibleScore;
     private float currentScore;
+    private int playerhealth;
+    private float initTime;
+
 
     private void Awake() {
         MakeInstance();
@@ -28,6 +32,7 @@ public class GameplayController : MonoBehaviour
         timerText = GameObject.Find("TimerText").GetComponent<Text>();
 
         coinText.text = "Coins: " + coinScore;
+        initTime = timerTime;
     }
     // Start is called before the first frame update
     void Start()
@@ -57,6 +62,7 @@ public class GameplayController : MonoBehaviour
     }
 
     public void DisplayHealth(int health){
+        playerhealth = health;
         healthText.text = "Health: " + health;
     }
 
@@ -72,11 +78,13 @@ public class GameplayController : MonoBehaviour
     public void GameOver(){
         Time.timeScale = 0f;
         endPanel.SetActive(true);
-
+        endPanel.transform.Find("EndGame Text").GetComponent<Text>().text = "Gameover";
+        endPanel.transform.Find("Stars").GetComponent<Image>().sprite = stars[0];
     }
 
     public void CompletedLevel(){
         Time.timeScale = 0f;
+        CalculateStarScore(playerhealth);
         endPanel.transform.Find("EndGame Text").GetComponent<Text>().text = "Complete";
         endPanel.transform.Find("Stars").GetComponent<Image>().sprite = stars[starScore];
         endPanel.SetActive(true);
@@ -84,18 +92,26 @@ public class GameplayController : MonoBehaviour
 
     private void CalculateStarScore(int health){
         //100 is for playerhealth
-        totalPossibleScore = timerTime + 100;
+        totalPossibleScore = initTime + 100 + coinParent.transform.childCount;
         currentScore = (timerTime + health + coinScore) / totalPossibleScore;
 
-        if(totalPossibleScore >= 0.75){
+        if(currentScore >= 0.75){
             starScore = 3;
-        }else if(totalPossibleScore >= 0.5 && totalPossibleScore < .75){
+        }else if(currentScore >= 0.5 && currentScore < .75){
             starScore = 2;
-        }else if(totalPossibleScore >= .25 && totalPossibleScore < .5){
+        }else if(currentScore >= .25 && currentScore < .5){
             starScore = 1;
-        }else{
+        }else if(currentScore < .25){
             starScore = 0;
         }
         GameManager.instance.StoreStarScore(starScore);
+    }
+    public void RestartLevel(){
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void LoadLevelSelect(){
+        SceneManager.LoadScene("MainMenu");
     }
 }
