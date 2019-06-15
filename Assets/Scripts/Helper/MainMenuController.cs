@@ -14,6 +14,7 @@ public class MainMenuController : MonoBehaviour
 
 
     private void Start() {
+        Time.timeScale = 1f;
         GameManager.instance.UpdateLockedLevels();
         UpdateLevelStatus();
         UpdateStarScoreText();
@@ -40,10 +41,12 @@ public class MainMenuController : MonoBehaviour
     }
 
     void UpdateLevelStatus(){
-        for(int levelIndex = 1; levelIndex < GameManager.instance.totalNumOfLevels; levelIndex++){
+        for(int levelIndex = 0; levelIndex < GameManager.instance.totalNumOfLevels; levelIndex++){
             if(GameManager.instance.levelsUnlocked[levelIndex]){
-                levels[levelIndex].GetComponent<Image>().sprite = stageUnlock[0];
-                levels[levelIndex].GetComponentInChildren<Text>().text = "Unlocked";
+                if(levelIndex > 0){
+                    levels[levelIndex].GetComponentInChildren<Text>().text = "Unlocked";
+                }
+                levels[levelIndex].GetComponent<Image>().sprite = stageUnlock[GameManager.instance.starsEarnedPerLevel[levelIndex]];
             }
         }
     }
