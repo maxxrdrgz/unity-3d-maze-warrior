@@ -20,7 +20,7 @@ public class PlayerDamage : MonoBehaviour
     {
         Collider[] hits = Physics.OverlapSphere(
             transform.position, 
-            0.4f, 
+            0.6f, 
             enemyLayer
         );    
 
