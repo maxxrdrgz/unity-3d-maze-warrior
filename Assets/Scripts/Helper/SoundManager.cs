@@ -6,9 +6,27 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
     [SerializeField]
-    private AudioSource audiosource;
+    private AudioSource coin_audio_source;
+    [SerializeField]
+    private AudioSource bg_audio_source;
+    [SerializeField]
+    private AudioSource player_audio_source;
+    [SerializeField]
+    private AudioSource fight_fx_audio_source;
     [SerializeField]
     private AudioClip coinSound;
+    [SerializeField]
+    private AudioClip jumpSound;
+    [SerializeField]
+    private AudioClip landingSound;
+    [SerializeField]
+    private AudioClip winSound;
+    [SerializeField]
+    private AudioClip gameoverSound;
+    [SerializeField]
+    private AudioClip playerHitSound;
+    [SerializeField]
+    private AudioClip enemyDeadSound;
 
     private void Awake() {
         MakeInstance();
@@ -35,8 +53,41 @@ public class SoundManager : MonoBehaviour
     }
 
     public void PlayCoinSound(){
-        audiosource.clip = coinSound;
-        audiosource.Play();
+        coin_audio_source.clip = coinSound;
+        coin_audio_source.Play();
     }
 
+    public void StopBgMusic(){
+        bg_audio_source.Stop();
+    }
+
+    public void PlayGameOverSound(){
+        bg_audio_source.clip = gameoverSound;
+        bg_audio_source.Play();
+    }
+
+    public void PlayWinSound(){
+        bg_audio_source.clip = winSound;
+        bg_audio_source.Play();
+    }
+
+    public void PlayJumpSound(){
+        player_audio_source.clip = jumpSound;
+        player_audio_source.Play();
+    }
+    
+    public void PlayLandingSound(){
+        player_audio_source.clip = landingSound;
+        player_audio_source.Play();
+    }
+
+    public void PlayHitSound(){
+        fight_fx_audio_source.clip = playerHitSound;
+        fight_fx_audio_source.Play();
+    }
+
+    public void PlayEnemyDeadSound(){
+        fight_fx_audio_source.clip = enemyDeadSound;
+        fight_fx_audio_source.Play();
+    }
 }
