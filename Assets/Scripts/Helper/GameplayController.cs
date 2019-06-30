@@ -26,7 +26,7 @@ public class GameplayController : MonoBehaviour
 
     private void Awake() {
         MakeInstance();
-
+        Time.timeScale = 1f;
         coinText = GameObject.Find("CoinText").GetComponent<Text>();
         healthText = GameObject.Find("HealthText").GetComponent<Text>();
         timerText = GameObject.Find("TimerText").GetComponent<Text>();
@@ -44,8 +44,13 @@ public class GameplayController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CountdownTimer();
-
+        if(timerTime >= 0){
+            CountdownTimer();
+        }
+        if(!isPlayerAlive){
+            GameOver();
+            enabled = false;
+        }
     }
 
     void MakeInstance(){
@@ -76,6 +81,7 @@ public class GameplayController : MonoBehaviour
     }
 
     public void GameOver(){
+        SoundManager.instance.PlayGameOverSound();
         Time.timeScale = 0f;
         endPanel.SetActive(true);
         endPanel.transform.Find("EndGame Text").GetComponent<Text>().text = "Gameover";
@@ -83,6 +89,7 @@ public class GameplayController : MonoBehaviour
     }
 
     public void CompletedLevel(){
+        SoundManager.instance.PlayWinSound();
         Time.timeScale = 0f;
         CalculateStarScore(playerhealth);
         endPanel.transform.Find("EndGame Text").GetComponent<Text>().text = "Complete";
@@ -107,7 +114,6 @@ public class GameplayController : MonoBehaviour
         GameManager.instance.StoreStarScore(starScore);
     }
     public void RestartLevel(){
-        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
