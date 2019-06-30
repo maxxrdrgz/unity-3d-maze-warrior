@@ -21,6 +21,7 @@ public class EnemyHealth : MonoBehaviour
             health = 0;
         }
         if(health == 0){
+            gameObject.GetComponent<Collider>().enabled = false;
             enemyScript.enabled = false;
             anim.SetTrigger(Tags.DEAD_ANIMATION);
             Invoke("DeactivateEnemy", 3f);
