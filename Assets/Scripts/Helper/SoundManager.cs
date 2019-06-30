@@ -62,12 +62,16 @@ public class SoundManager : MonoBehaviour
     }
 
     public void PlayGameOverSound(){
+        StopBgMusic();
         bg_audio_source.clip = gameoverSound;
+        bg_audio_source.loop = false;
         bg_audio_source.Play();
     }
 
     public void PlayWinSound(){
+        StopBgMusic();
         bg_audio_source.clip = winSound;
+        bg_audio_source.loop = false;
         bg_audio_source.Play();
     }
 
