@@ -29,6 +29,7 @@ public class PlayerDamage : MonoBehaviour
                 hits[0].gameObject
                     .GetComponent<EnemyHealth>()
                     .ApplyDamage(damageAmount);
+                SoundManager.instance.PlayHitSound();
             }
         }
     }
