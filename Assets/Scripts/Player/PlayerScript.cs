@@ -106,22 +106,22 @@ public class PlayerScript : MonoBehaviour
     }
 
     void IsOnGround(){
-        canJump = Physics.Raycast(
-            groundCheck.position, 
-            Vector3.down, 
-            0.1f, 
-            groundLayer
-        );
+        if(!canJump){
+            canJump = Physics.Raycast(
+                groundCheck.position, 
+                Vector3.down, 
+                0.1f, 
+                groundLayer
+            );
+        }
     }
 
     void Jump(){
         if(Input.GetKeyDown(KeyCode.Space)){
             if(canJump){
                 canJump = false;
-                rbody.MovePosition(
-                    transform.position + transform.up * (jumpForce * playerSpeed)
-                );
                 anim.SetTrigger(Tags.JUMP_TRIGGER);
+                SoundManager.instance.PlayJumpSound();
             }
         }
     }
