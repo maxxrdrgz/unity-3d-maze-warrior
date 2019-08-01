@@ -15,6 +15,14 @@ public class EnemyHealth : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
+    /** 
+        This function will apply damage to the enemy. Once health is equal to
+        0, the enemy will have it's collider disabled, this script will be
+        disabled, the dead animation will be played and then invoke the
+        deactivate enemy function.
+
+        @param {int} amount of damage to apply to enemy health
+    */
     public void ApplyDamage(int damageAmount){
         health -= damageAmount;
         if(health < 0){
@@ -28,6 +36,9 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
+    /** 
+        This function deactivates the game object this script is attached to.
+    */
     void DeactivateEnemy(){
         gameObject.SetActive(false);
     }

@@ -21,6 +21,9 @@ public class EnemyScript : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
+    /** 
+        This function will stop all enemies from moving if the player is dead.
+    */
     private void FixedUpdate() {
         if(GameplayController.instance.isPlayerAlive){
             EnemyAI();
@@ -33,6 +36,15 @@ public class EnemyScript : MonoBehaviour
         }
     }
 
+    /** 
+        This function controls all of the enemy AI. This function first checks,
+        if the player is within a certain distance of the enemy, if so, the
+        enemy will face towards the players direction and start moving towards
+        the player. Once the player is within the attack distance, the enemy 
+        will stop running, and start the attacking phase. Lastly, if the player
+        is outside of the enemy watch threshold, the enemy will stop moving and
+        stand still.
+    */
     void EnemyAI(){
         Vector3 direction = player.transform.position - transform.position;
         float distance = direction.magnitude;
@@ -78,10 +90,16 @@ public class EnemyScript : MonoBehaviour
         }
     }
     
+    /** 
+        Activates gameobject that can be found on the enemies sword.
+    */
     void ActivateDamagePoint(){
         damagePoint.SetActive(true);
     }
 
+    /** 
+        Deactivates gameobject that can be found on the enemies sword.
+    */
     void DeactivateDamagePoint(){
         damagePoint.SetActive(false);
     }
