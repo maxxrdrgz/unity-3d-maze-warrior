@@ -44,6 +44,9 @@ public class SoundManager : MonoBehaviour
         
     }
 
+    /** 
+        Creates a singleton that only exists within the current scene
+    */
     void MakeInstance(){
         if(instance == null){
             instance = this;

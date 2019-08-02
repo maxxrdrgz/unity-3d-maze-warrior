@@ -40,6 +40,10 @@ public class MainMenuController : MonoBehaviour
         }
     }
 
+    /** 
+        Checks all levels to see if their locked status has changed. If so,
+        updates the locked text and updates the level sprite
+    */
     void UpdateLevelStatus(){
         for(int levelIndex = 0; levelIndex < GameManager.instance.totalNumOfLevels; levelIndex++){
             if(GameManager.instance.levelsUnlocked[levelIndex]){

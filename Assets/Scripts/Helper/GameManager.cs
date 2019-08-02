@@ -33,7 +33,10 @@ public class GameManager : MonoBehaviour
     {
         
     }
-
+    
+    /** 
+        Creates a singleton that persists after loading a new scene
+    */
     void MakeInstance(){
         if(instance == null){
             instance = this;
@@ -42,7 +45,10 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
+    
+    /** 
+        Adds up all the stars earned for each level
+    */
     void UpdateTotalStarScore(){
         totalStarScore = 0;
         for(int i = 0; i < starsEarnedPerLevel.Length; i++){
@@ -50,6 +56,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /** 
+        Initializes gameplay data which includes getting the total number of
+        levels, ensuring the first level is unlocked and setting stars to 0.
+    */
     void InitializeData(){
         totalNumOfLevels = SceneManager.sceneCountInBuildSettings - 1;
         totalStarScore = 0;
@@ -59,14 +69,31 @@ public class GameManager : MonoBehaviour
         // minus one for main menu scene
     }
 
+    /** 
+        Set's the level index to true
+
+        @param {int} the level #
+    */
     void UnlockLevel(int level){
         levelsUnlocked[level-1] = true;
     }
 
+    /** 
+        Simple formula to determine how many accumulated stars are needed to 
+        unlock a level.
+
+        @param {int} the level #
+    */
     public int GetStarsNeededForUnlock(int level){
         return level * 2;
     }
 
+    /** 
+        Stores the number of stars earned for a given level in an array, updates
+        the total star score and updates the locked levels array.
+
+        @param {int} the number of stars earned for the given level
+    */
     public void StoreStarScore(int starsEarned){
         if(starsEarnedPerLevel[currentLevel-1] < starsEarned){
             starsEarnedPerLevel[currentLevel-1] = starsEarned;
@@ -75,6 +102,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /** 
+        Updates the status of the level index to true if the level has been
+        unlocked.
+    */
     public void UpdateLockedLevels(){
         for(int levelIndex = 1; levelIndex < totalNumOfLevels; levelIndex++){
             if(totalStarScore >= GetStarsNeededForUnlock(levelIndex)){

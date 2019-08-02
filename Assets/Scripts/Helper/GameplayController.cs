@@ -53,6 +53,9 @@ public class GameplayController : MonoBehaviour
         }
     }
 
+    /** 
+        Creates a singleton that only exists in the current scene
+    */
     void MakeInstance(){
         if(instance == null){
             instance = this;
@@ -61,16 +64,29 @@ public class GameplayController : MonoBehaviour
         }
     }
 
+    /** 
+        Increments the coin score and updates the coin text
+    */
     public void CoinCollected(){
         coinScore++;
         coinText.text = "Coins: " +coinScore;
     }
 
+    /**
+        Stores the player health in a local variable and updates the health
+        text.
+
+        @param {int} health of the player
+    */
     public void DisplayHealth(int health){
         playerhealth = health;
         healthText.text = "Health: " + health;
     }
 
+    /** 
+        Starts a countdown timer and updates the timer text. Once the timer has
+        reached 0, the game over functino is called.
+    */
     void CountdownTimer(){
         timerTime -= Time.deltaTime;
         timerText.text = "Time: " + timerTime.ToString("F0");
@@ -80,6 +96,10 @@ public class GameplayController : MonoBehaviour
         }
     }
 
+    /** 
+        Stops the timescale, displays the endpanel and updates the text and
+        stars sprite on the end panel screen.
+    */
     public void GameOver(){
         SoundManager.instance.PlayGameOverSound();
         Time.timeScale = 0f;
@@ -88,6 +108,10 @@ public class GameplayController : MonoBehaviour
         endPanel.transform.Find("Stars").GetComponent<Image>().sprite = stars[0];
     }
 
+    /** 
+        Stops the timescale, calculates the star score based on player health
+        and displays the endpanel with the updated text and stars earned.
+    */
     public void CompletedLevel(){
         SoundManager.instance.PlayWinSound();
         Time.timeScale = 0f;
@@ -97,6 +121,12 @@ public class GameplayController : MonoBehaviour
         endPanel.SetActive(true);
     }
 
+    /** 
+        Calculates the stars earned using the total number of available coins to
+        collect, the total amount of time passed and the player's current health
+
+        @param {int} the player health
+    */
     private void CalculateStarScore(int health){
         //100 is for playerhealth
         totalPossibleScore = initTime + 100 + coinParent.transform.childCount;
@@ -113,6 +143,7 @@ public class GameplayController : MonoBehaviour
         }
         GameManager.instance.StoreStarScore(starScore);
     }
+
     public void RestartLevel(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
