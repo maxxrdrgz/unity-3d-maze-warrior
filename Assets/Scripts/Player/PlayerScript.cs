@@ -43,6 +43,10 @@ public class PlayerScript : MonoBehaviour
         MoveAndRotate();
     }
 
+    /** 
+        Depending on the input from the user, move horizontal will make the
+        player move forward while move veritcal will rotate the player.
+    */
     void PlayerMoveKeyboard(){
         if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)){
             moveHorizontal = -1;
@@ -64,6 +68,9 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
+    /** 
+        Changes the player's rigid body to actually move the player
+    */
     void MoveAndRotate(){
         if(moveVertical != 0){
             rbody.MovePosition(
@@ -75,6 +82,9 @@ public class PlayerScript : MonoBehaviour
         rbody.rotation = Quaternion.Euler(0f, rotY, 0f);
     }
 
+    /** 
+        Animates the player's movement based on it's current state.
+    */
     void AnimatePlayer(){
         if(moveVertical != 0){
             if(!isPlayerMoving){
@@ -95,6 +105,10 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
+    /** 
+        When the user presses the k key, the players attack animation is played
+        if the player is not running or already attacking.
+    */
     void Attack(){
         if(Input.GetKeyDown(KeyCode.K)){
             if(!anim.GetCurrentAnimatorStateInfo(0).IsName(Tags.RUN_ANIMATION) ||
@@ -105,6 +119,9 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
+    /** 
+        Checks if player is on the ground. If so, the player can jump.
+    */
     void IsOnGround(){
         if(!canJump){
             canJump = Physics.Raycast(
@@ -116,6 +133,10 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
+    /** 
+        When the user presses the space bar, if the player is grounded, this 
+        function will play the jump animation and the jump sound.
+    */
     void Jump(){
         if(Input.GetKeyDown(KeyCode.Space)){
             if(canJump){
@@ -126,14 +147,27 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
+    /** 
+        Activates gameobject that can be found on the player's sword.
+    */
     void ActivateDamagePoint(){
         damagePoint.SetActive(true);
     }
 
+    /** 
+        Deactivates gameobject that can be found on the player's sword.
+    */
     void DeactivateDamagePoint(){
         damagePoint.SetActive(false);
     }
     
+    /** 
+        Detects if the player has collided with either the treasure, a coin or
+        if the player has collided with a doors entry point and triggers the 
+        door open animation.
+
+        @param {Collider} A Collider involved in this collision.
+    */
     private void OnTriggerEnter(Collider other) {
         if(other.tag == Tags.COIN_TAG){
             other.gameObject.SetActive(false);
@@ -150,6 +184,12 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
+    /** 
+        Detects if the player has walked out far enough away from a door. If so
+        the door's close animation will play.
+
+        @param {Collider} The other Collider involved in this collision.
+    */
     private void OnTriggerExit(Collider other) {
         if(other.tag == Tags.DOOR_TAG){
             other.gameObject.GetComponent<Animator>().Play("DoorClose");

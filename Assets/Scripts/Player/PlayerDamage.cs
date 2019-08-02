@@ -15,7 +15,10 @@ public class PlayerDamage : MonoBehaviour
         
     }
 
-    // Update is called once per frame
+    /** 
+        This function will create an overlap sphere collider on the enemylayer,
+        to detect collisions with the enemy. If true, deal damage to the enemy.
+    */
     void Update()
     {
         Collider[] hits = Physics.OverlapSphere(

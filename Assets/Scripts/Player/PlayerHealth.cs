@@ -19,6 +19,13 @@ public class PlayerHealth : MonoBehaviour
         GameplayController.instance.DisplayHealth(health);
     }
 
+    /** 
+        This function will apply damage to the player. Once health is equal to
+        0, the player will play the dead animation and mark the isplayeralive
+        boolean to false.
+
+        @param {int} amount of damage to apply to player health
+    */
     public void ApplyDamage(int damageAmount){
         health -= damageAmount;
         if(health < 0){
